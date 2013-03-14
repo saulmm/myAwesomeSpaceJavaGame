@@ -7,8 +7,11 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 
 import javax.swing.JPanel;
+
+import threads.ObstacleLauncher;
 
 import entities.Asteroid;
 import entities.Craft;
@@ -17,10 +20,11 @@ import entities.Obstacles;
 import entities.Space;
 import entities.Space.Star;
 
+import listeners.ObstacleListener;
 import listeners.ResizeListener;
 
 
-public class AnimationCanvas extends JPanel implements Runnable, ResizeListener {
+public class AnimationCanvas extends JPanel implements Runnable, ResizeListener, ObstacleListener {
 	private static final long serialVersionUID = 1L;
 	private final static int DELAY = 30;
 	
@@ -31,6 +35,7 @@ public class AnimationCanvas extends JPanel implements Runnable, ResizeListener 
 	private Space space;
 	private boolean running;
 	private Obstacles obstacles;
+	private ObstacleLauncher obstacleLauncher;
 	
 	
 	public AnimationCanvas() {
@@ -43,15 +48,20 @@ public class AnimationCanvas extends JPanel implements Runnable, ResizeListener 
 		this.space = new Space();
 		this.obstacles = new Obstacles();
 		this.animationThread = new Thread(this);
+		this.obstacleLauncher = new ObstacleLauncher();
+		this.asteroidLauncher = new Thread(obstacleLauncher);
+		this.obstacleLauncher.addObstacleListener(this);
 		
 		//Refactor
-		obstacles.addAsteroid();
+//		obstacles.addAsteroid();
+
 	}
 	
 	@Override
 	public void addNotify() {
 		super.addNotify();
 		this.animationThread.start();
+		this.asteroidLauncher.start();
 		this.running = true;
 	}
 	
@@ -98,17 +108,38 @@ public class AnimationCanvas extends JPanel implements Runnable, ResizeListener 
 	
 		for(Star s : stars) {
 			g2d.setColor(Color.white);
-			g2d.fillOval(s.getX(), s.getY(), s.getDIAMETER(), s.getDIAMETER());
+			g2d.fillOval(
+					s.getX(), 
+					s.getY(), 
+					s.DIAMETER, 
+					s.DIAMETER);
 		}
 		
-		g2d.drawImage(craft.getCraftImage(), craft.getX(), craft.getY(), this);
+		g2d.drawImage(
+				craft.getCraftImage(), 
+				craft.getX(), 
+				craft.getY(), 
+				this);
 	
 		for(Missile m : craftMissiles) {
-			g2d.drawImage(m.getMissileImage(), m.getX(), m.getY() - m.getImageHeight(), null);
+			g2d.drawImage(
+					m.getMissileImage(), 
+					m.getX(), 
+					m.getY() - m.getImageHeight(), 
+					null);
 		}
 		
-		for(Asteroid a : asteroids) {
-			g2d.drawImage(a.getAsteroidImg(), a.getX(), a.getY(), this);
+		// To do
+		try {
+			for (Asteroid a : asteroids) {
+				g2d.drawImage(
+						a.getAsteroidImg(), 
+						a.getX(), 
+						a.getY(), 
+						this);
+			}
+		} catch (ConcurrentModificationException e) {
+			System.err.println(e.getMessage());
 		}
 		
 	}
@@ -130,6 +161,12 @@ public class AnimationCanvas extends JPanel implements Runnable, ResizeListener 
 	public void onResize(Dimension newDimension) {
 //		space.resize();
 //		craft.resize();
+	}
+
+	@Override
+	public void onLaunchAsteroid() {
+		obstacles.addAsteroid();
+
 	}
 
 }

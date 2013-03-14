@@ -29,8 +29,8 @@ public class Space {
 	
 	
 	public class Star {
-		private final int SPEED;
-		private final int DIAMETER;
+		public final int SPEED;
+		public final int DIAMETER;
 		private int x;
 		private int y;
 		
