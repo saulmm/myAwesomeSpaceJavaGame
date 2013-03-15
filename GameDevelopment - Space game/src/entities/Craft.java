@@ -157,7 +157,11 @@ public class Craft {
 	}	
 	
 	public Rectangle getBounds() {
-		return new Rectangle(x, y, x + craftImage.getWidth(null), y + craftImage.getHeight(null));
+		return new Rectangle(
+				x, 
+				y, 
+				craftImage.getWidth(null), 
+				craftImage.getHeight(null));
 	}
 
 	public void collision() {

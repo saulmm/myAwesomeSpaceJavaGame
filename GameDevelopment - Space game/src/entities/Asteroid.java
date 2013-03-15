@@ -82,8 +82,8 @@ public class Asteroid {
 		return new Rectangle(
 				posX, 
 				posY, 
-				(posX + asteroidImg.getWidth(null)),
-				(posY + asteroidImg.getHeight(null) + posY));
+				(asteroidImg.getWidth(null)),
+				(asteroidImg.getHeight(null)));
 	}
 	
 }

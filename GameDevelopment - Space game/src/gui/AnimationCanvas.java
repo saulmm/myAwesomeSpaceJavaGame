@@ -33,6 +33,7 @@ public class AnimationCanvas extends JPanel implements Runnable, ResizeListener,
 	
 	private Craft craft;
 	private Space space;
+	private StateBar lifeBar;
 	private boolean running;
 	private Obstacles obstacles;
 	private ObstacleLauncher obstacleLauncher;
@@ -47,6 +48,7 @@ public class AnimationCanvas extends JPanel implements Runnable, ResizeListener,
 		this.craft = new Craft();
 		this.space = new Space();
 		this.obstacles = new Obstacles();
+		this.lifeBar = new StateBar("life_bar");
 		this.animationThread = new Thread(this);
 		this.obstacleLauncher = new ObstacleLauncher();
 		this.asteroidLauncher = new Thread(obstacleLauncher);
@@ -113,7 +115,8 @@ public class AnimationCanvas extends JPanel implements Runnable, ResizeListener,
 		ArrayList<Missile> craftMissiles = craft.getMissiles();
 		ArrayList<Star> stars = space.getStars();
 		ArrayList<Asteroid> asteroids = obstacles.getAsteroids();
-	
+		g2d.setColor(Color.red);
+		
 		for(Star s : stars) {
 			g2d.setColor(Color.white);
 			g2d.fillOval(
@@ -123,12 +126,18 @@ public class AnimationCanvas extends JPanel implements Runnable, ResizeListener,
 					s.DIAMETER);
 		}
 		
+
+		
+		//Debug
+//		g2d.fillRect(craft.getBounds().x, craft.getBounds().y, craft.getBounds().width, craft.getBounds().height);
 		g2d.drawImage(
 				craft.getCraftImage(), 
 				craft.getX(), 
 				craft.getY(), 
 				this);
-	
+
+		
+		
 		for(Missile m : craftMissiles) {
 			g2d.drawImage(
 				m.getMissileImage(), 
@@ -136,10 +145,14 @@ public class AnimationCanvas extends JPanel implements Runnable, ResizeListener,
 				m.getY() - m.getImageHeight(), 
 				null);
 		}
+
 		
 		// To do
 		try {
 			for (Asteroid a : asteroids) {
+//				//Debug
+//				g2d.fillRect(a.getBounds().x, a.getBounds().y, a.getBounds().width, a.getBounds().height);
+				
 				g2d.drawImage(
 					a.getAsteroidImg(), 
 					a.getPosX(), 
