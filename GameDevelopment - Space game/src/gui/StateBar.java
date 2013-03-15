@@ -14,4 +14,8 @@ public class StateBar {
 	public Image getBarImg() {
 		return barImg;
 	}
+	
+	public int getBarWidth() {
+		return barImg.getWidth(null);
+	}
 }

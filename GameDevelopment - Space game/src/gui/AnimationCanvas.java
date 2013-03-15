@@ -110,13 +110,10 @@ public class AnimationCanvas extends JPanel implements Runnable, ResizeListener,
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
-		
 		Graphics2D g2d = (Graphics2D) g;
-		ArrayList<Missile> craftMissiles = craft.getMissiles();
-		ArrayList<Star> stars = space.getStars();
-		ArrayList<Asteroid> asteroids = obstacles.getAsteroids();
-		g2d.setColor(Color.red);
 		
+		// Painting stars
+		ArrayList<Star> stars = space.getStars();
 		for(Star s : stars) {
 			g2d.setColor(Color.white);
 			g2d.fillOval(
@@ -126,10 +123,7 @@ public class AnimationCanvas extends JPanel implements Runnable, ResizeListener,
 					s.DIAMETER);
 		}
 		
-
-		
-		//Debug
-//		g2d.fillRect(craft.getBounds().x, craft.getBounds().y, craft.getBounds().width, craft.getBounds().height);
+		// Painting craft
 		g2d.drawImage(
 				craft.getCraftImage(), 
 				craft.getX(), 
@@ -137,7 +131,8 @@ public class AnimationCanvas extends JPanel implements Runnable, ResizeListener,
 				this);
 
 		
-		
+		// Painting missiles;
+		ArrayList<Missile> craftMissiles = craft.getMissiles();
 		for(Missile m : craftMissiles) {
 			g2d.drawImage(
 				m.getMissileImage(), 
@@ -146,13 +141,20 @@ public class AnimationCanvas extends JPanel implements Runnable, ResizeListener,
 				null);
 		}
 
+		// Painting Lifebar
+		g2d.drawImage(
+				lifeBar.getBarImg(), 
+				MyFrame.FRAME_DIMENSION.width /2 - lifeBar.getBarImg().getWidth(null) / 2,
+				0,
+				null);
 		
 		// To do
+
 		try {
+			// Painting asteroids
+			ArrayList<Asteroid> asteroids = obstacles.getAsteroids();
 			for (Asteroid a : asteroids) {
-//				//Debug
-//				g2d.fillRect(a.getBounds().x, a.getBounds().y, a.getBounds().width, a.getBounds().height);
-				
+//				debugCollisions(g2d, a); // Debug
 				g2d.drawImage(
 					a.getAsteroidImg(), 
 					a.getPosX(), 
@@ -163,6 +165,11 @@ public class AnimationCanvas extends JPanel implements Runnable, ResizeListener,
 		} catch (ConcurrentModificationException e) {
 			System.err.println(e.getMessage());
 		}
+	}
+
+	private void debugCollisions(Graphics2D g2d, Asteroid a) {
+		g2d.fillRect(a.getBounds().x, a.getBounds().y, a.getBounds().width, a.getBounds().height);
+		g2d.fillRect(craft.getBounds().x, craft.getBounds().y, craft.getBounds().width, craft.getBounds().height);
 	}
 
 	private class TAdapter extends KeyAdapter {
