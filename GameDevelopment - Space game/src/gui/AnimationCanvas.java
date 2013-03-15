@@ -73,7 +73,6 @@ public class AnimationCanvas extends JPanel implements Runnable, ResizeListener,
 			this.space.move();
 			
 			ArrayList<Missile> craftMissle = craft.getMissiles();
-			
 			for(Missile m : craftMissle) {
 				if(m.isVisible()) {
 					m.move();
@@ -83,6 +82,15 @@ public class AnimationCanvas extends JPanel implements Runnable, ResizeListener,
 			sleepThread();
 			craft.move();
 			obstacles.moveAsteroids();
+			
+			ArrayList<Asteroid> asteroids = obstacles.getAsteroids();
+			for(Asteroid a : asteroids) {
+				if(a.getBounds().intersects(craft.getBounds())) {
+					craft.collision();
+				}
+			}
+			
+			craft.alive();
 			this.repaint();
 			
 			
@@ -123,25 +131,25 @@ public class AnimationCanvas extends JPanel implements Runnable, ResizeListener,
 	
 		for(Missile m : craftMissiles) {
 			g2d.drawImage(
-					m.getMissileImage(), 
-					m.getX(), 
-					m.getY() - m.getImageHeight(), 
-					null);
+				m.getMissileImage(), 
+				m.getX(), 
+				m.getY() - m.getImageHeight(), 
+				null);
 		}
 		
 		// To do
 		try {
 			for (Asteroid a : asteroids) {
 				g2d.drawImage(
-						a.getAsteroidImg(), 
-						a.getX(), 
-						a.getY(), 
-						this);
+					a.getAsteroidImg(), 
+					a.getPosX(), 
+					a.getPosY(), 
+					this);
 			}
+			
 		} catch (ConcurrentModificationException e) {
 			System.err.println(e.getMessage());
 		}
-		
 	}
 
 	private class TAdapter extends KeyAdapter {

@@ -12,8 +12,8 @@ import javax.swing.ImageIcon;
 
 
 public class Craft {
-	private final int SPEED = 3;
-
+	private final int SPEED = 6;
+// Example commit
 	private String craftSource = "craft.png";
 	private Image craftImage;
 	private ArrayList<Missile> missiles;
@@ -21,7 +21,6 @@ public class Craft {
 	private int deltaY;
 	private int x;
 	private int y;
-	
 
 	public Craft() {
 		x = 40;
@@ -125,11 +124,11 @@ public class Craft {
 		}
 
 		if (key == KeyEvent.VK_UP) {
-			deltaY = -SPEED;
+			deltaY = -SPEED + 1;
 		}
 
 		if (key == KeyEvent.VK_DOWN) {
-			deltaY = SPEED;
+			deltaY = SPEED + 1;
 		}
 		
 		if (key == KeyEvent.VK_SPACE) {
@@ -157,6 +156,22 @@ public class Craft {
 		}
 	}	
 	
+	public Rectangle getBounds() {
+		return new Rectangle(x, y, x + craftImage.getWidth(null), y + craftImage.getHeight(null));
+	}
+
+	public void collision() {
+			craftImage = Utils.getImage(craftSource, getClass());
+		
+		craftSource = "craft_collision.png";
+	}
+	
+	public void alive() {
+			craftImage = Utils.getImage(craftSource, getClass());
+
+		
+		craftSource = "craft.png";
+	}
 	
 	
 }

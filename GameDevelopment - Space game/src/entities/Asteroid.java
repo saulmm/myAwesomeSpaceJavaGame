@@ -3,37 +3,36 @@ package entities;
 import gui.MyFrame;
 
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.util.Random;
 
 import Core.Configuration;
-import Core.Difficulties;
 
 public class Asteroid {
 	private final int SPEED;
-	private int x;
-	private int y;
+	private int posX;
+	private int posY;
 	private Image asteroidImg;
 	private boolean visible;
 	
 	public Asteroid() {
 		SPEED = new Random().nextInt(10) + getRangeOfDifficulty();;
-		
-		this.asteroidImg = Utils.getImage("asteroid.png", this.getClass());
-		this.x = MyFrame.FRAME_DIMENSION.width;
-		this.y = new Random().nextInt(MyFrame.FRAME_DIMENSION.height);
 
 		this.visible = true;
+		this.posX = MyFrame.FRAME_DIMENSION.width;
+		this.posY = new Random().nextInt(MyFrame.FRAME_DIMENSION.height);
+		this.asteroidImg = Utils.getImage("asteroid.png", this.getClass());
 		
 		// Debug
 		System.out.println("Asteroid.Asteroid() speed : "+SPEED);
 	}
 	
 	public void move() {		
-		if(x == (0 - asteroidImg.getWidth(null))) {
+		if(posX == (0 - asteroidImg.getWidth(null))) {
 			this.visible = false;
 		
 		} else {
-			x -= SPEED;
+			posX -= SPEED;
 
 		}
 	}
@@ -56,12 +55,12 @@ public class Asteroid {
 	}
 
 	
-	public int getX() {
-		return x;
+	public int getPosX() {
+		return posX;
 	}
 
-	public int getY() {
-		return y;
+	public int getPosY() {
+		return posY;
 	}
 
 	public Image getAsteroidImg() {
@@ -74,9 +73,17 @@ public class Asteroid {
 
 	@Override
 	public String toString() {
-		return "Asteroid [SPEED=" + SPEED + ", x=" + x + ", y=" + y
+		return "Asteroid [SPEED=" + SPEED + ", x=" + posX + ", y=" + posY
 				+ ", asteroidImg=" + asteroidImg + ", visible=" + visible + "]";
 	}
 	
+	
+	public Rectangle getBounds() {
+		return new Rectangle(
+				posX, 
+				posY, 
+				(posX + asteroidImg.getWidth(null)),
+				(posY + asteroidImg.getHeight(null) + posY));
+	}
 	
 }
