@@ -1,8 +1,8 @@
-package gui;
+package game.gui;
 
 import java.awt.Image;
 
-import entities.Utils;
+import game.entities.Utils;
 
 public class StateBar {
 	private Image barImg;

@@ -1,6 +1,7 @@
-package entities;
+package game.entities;
 
-import gui.MyFrame;
+import game.core.Configuration;
+import game.gui.MyFrame;
 
 import java.awt.Image;
 import java.util.Random;
@@ -21,7 +22,7 @@ public class Missile {
 		this.x = x;
 		this.y = y;
 		this.missileImage = new ImageIcon(this.getClass()
-			.getResource("/res/missile.png")).getImage();
+			.getResource(Configuration.RESOURCE_PATH+"missile.png")).getImage();
 	}
 	
 	public void move() {

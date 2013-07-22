@@ -1,4 +1,4 @@
-package gui;
+package game.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -11,17 +11,17 @@ import java.util.ConcurrentModificationException;
 
 import javax.swing.JPanel;
 
-import threads.ObstacleLauncher;
 
-import entities.Asteroid;
-import entities.Craft;
-import entities.Missile;
-import entities.Obstacles;
-import entities.Space;
-import entities.Space.Star;
+import game.entities.Asteroid;
+import game.entities.Craft;
+import game.entities.Missile;
+import game.entities.Obstacles;
+import game.entities.Space;
+import game.entities.Space.Star;
+import game.listeners.ObstacleListener;
+import game.listeners.ResizeListener;
+import game.threads.ObstacleLauncher;
 
-import listeners.ObstacleListener;
-import listeners.ResizeListener;
 
 
 public class AnimationCanvas extends JPanel implements Runnable, ResizeListener, ObstacleListener {

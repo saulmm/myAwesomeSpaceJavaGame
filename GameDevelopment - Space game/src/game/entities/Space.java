@@ -1,6 +1,6 @@
-package entities;
+package game.entities;
 
-import gui.MyFrame;
+import game.gui.MyFrame;
 
 import java.util.ArrayList;
 import java.util.Random;

@@ -1,8 +1,9 @@
-package threads;
+package game.threads;
+
+import game.listeners.ObstacleListener;
 
 import java.util.ArrayList;
 
-import listeners.ObstacleListener;
 
 public class ObstacleLauncher implements Runnable {
 	private ArrayList<ObstacleListener> obsListeners;

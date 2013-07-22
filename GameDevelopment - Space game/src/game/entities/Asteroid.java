@@ -1,12 +1,14 @@
-package entities;
+package game.entities;
 
-import gui.MyFrame;
+import game.core.Configuration;
+import game.gui.MyFrame;
 
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.util.Random;
 
-import Core.Configuration;
+import org.apache.log4j.Logger;
+
 
 public class Asteroid {
 	private final int SPEED;
@@ -14,8 +16,12 @@ public class Asteroid {
 	private int posY;
 	private Image asteroidImg;
 	private boolean visible;
+	private final  Logger log;
+
 	
 	public Asteroid() {
+		log = Logger.getLogger(this.getClass());
+		
 		SPEED = new Random().nextInt(10) + getRangeOfDifficulty();;
 
 		this.visible = true;
@@ -24,7 +30,8 @@ public class Asteroid {
 		this.asteroidImg = Utils.getImage("asteroid.png", this.getClass());
 		
 		// Debug
-		System.out.println("Asteroid.Asteroid() speed : "+SPEED);
+//		System.out.println("Asteroid.Asteroid() speed : "+SPEED);
+		log.debug("Speed: "+SPEED);
 	}
 	
 	public void move() {		

@@ -1,4 +1,6 @@
-package gui;
+package game.gui;
+
+import game.listeners.ResizeListener;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -8,7 +10,6 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
-import listeners.ResizeListener;
 
 
 public class MyFrame extends JFrame implements ComponentListener {

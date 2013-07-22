@@ -1,6 +1,7 @@
-package entities;
+package game.entities;
 
-import gui.MyFrame;
+import game.core.Configuration;
+import game.gui.MyFrame;
 
 import java.awt.Image;
 import java.awt.Rectangle;
@@ -27,7 +28,7 @@ public class Craft {
 		y = 60;
 
 		craftImage = new ImageIcon(this.getClass()
-				.getResource("/res/"+craftSource)).getImage();
+				.getResource(Configuration.RESOURCE_PATH+craftSource)).getImage();
 
 		missiles = new ArrayList<Missile>();
 		

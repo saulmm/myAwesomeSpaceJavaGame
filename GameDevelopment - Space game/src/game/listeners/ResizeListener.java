@@ -1,4 +1,4 @@
-package listeners;
+package game.listeners;
 
 import java.awt.Dimension;
 
